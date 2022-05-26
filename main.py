@@ -3,6 +3,7 @@ import boto3
 import pandas
 import argparse
 import sys
+import os.path
 
 #1.Preparing and parsing additional arguments.
 parser = argparse.ArgumentParser()
@@ -16,8 +17,13 @@ results = parser.parse_args()
 cols = results.cols
 sort = results.sort
 
-#2.Reading config data from file.
-config_file = open('config.json')
+#2.Checking if file exist and reading config data from file.
+if os.path.isfile('config.json'):
+    config_file = open('config.json')
+else:
+    print("config.json file is recquired! Please provide it.")
+    sys.exit()
+
 config_data = json.load(config_file)
 
 #3.Accessing AWS S3 bucket.
